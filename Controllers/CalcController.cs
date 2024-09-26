@@ -1,22 +1,51 @@
-namespace lr3.Services
+using lr3.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace lr3.Controllers
 {
-    public class CalcService
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CalcController : ControllerBase
     {
-        public int Add(int a, int b)
+        private readonly CalcService _calcService;
+        private readonly TimeService _timeService;
+
+        public CalcController(CalcService calcService, TimeService timeService)
         {
-            return a + b;
+            _calcService = calcService;
+            _timeService = timeService;
         }
 
-        public int Subtract(int a, int b)
+        [HttpGet("add")]
+        public IActionResult Add(int a, int b)
         {
-            return a - b;
+            return Ok(_calcService.Add(a, b));
         }
 
-        public int Multiply(int a, int b)
+        [HttpGet("subtract")]
+        public IActionResult Subtract(int a, int b)
         {
-            return a * b;
+            return Ok(_calcService.Subtract(a, b));
         }
 
-        public double Divide(int a, int b) => b != 0 ? (double)a / b : throw new DivideByZeroException();
+        [HttpGet("multiply")]
+        public IActionResult Multiply(int a, int b)
+        {
+            return Ok(_calcService.Multiply(a, b));
+        }
+
+        [HttpGet("divide")]
+        public IActionResult Divide(int a, int b)
+        {
+            try
+            {
+                return Ok(_calcService.Divide(a, b));
+            }
+            catch (DivideByZeroException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }
