@@ -1,21 +1,24 @@
-using lr3.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Додаємо сервіси для кожного з контролерів
-builder.Services.AddTransient<CalcService>();
-builder.Services.AddTransient<TimeService>();
-
-
-builder.Services.AddControllersWithViews(); 
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
-app.UseStaticFiles();
+    pattern: "{controller=Order}/{action=Register}/{id?}");
 
 app.Run();

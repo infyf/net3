@@ -1,0 +1,35 @@
+﻿@model List<lr6.Models.Product>
+
+<h2>Підсумок замовлення</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Назва продукту</th>
+            <th>Кількість</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>@product.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Загальна ціна: @ViewBag.TotalPriceFormatted грн</h3>
+
+<form asp-action="PlaceOrder" method="post" id="orderForm">
+    <button type="submit" class="btn btn-primary" onclick="return confirmOrder()">Оформити</button>
+</form>
+
+<script>
+    function confirmOrder() {
+
+        var confirmation = confirm("Ви впевнені, що хочете оформити замовлення?");
+        return confirmation;
+    }
+</script>
