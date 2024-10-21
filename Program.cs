@@ -1,21 +1,18 @@
-using lr3.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Р”РѕРґР°С”РјРѕ СЃРµСЂРІС–СЃРё РґР»СЏ РєРѕР¶РЅРѕРіРѕ Р· РєРѕРЅС‚СЂРѕР»РµСЂС–РІ
-builder.Services.AddTransient<CalcService>();
-builder.Services.AddTransient<TimeService>();
-
-
-builder.Services.AddControllersWithViews(); 
+// Додаємо контролери з поданнями
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+// Налаштування маршрутизації
+app.UseRouting();
 
-
-app.UseStaticFiles();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Product}/{action=Index}/{id?}");
+});
 
 app.Run();
