@@ -1,8 +1,8 @@
+using lr7.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using lr3.Models;
 
-namespace lr3.Controllers
+namespace lr7.Controllers
 {
     public class HomeController : Controller
     {
@@ -14,11 +14,6 @@ namespace lr3.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Calculator() // Метод для калькулятора
         {
             return View();
         }
